@@ -21,7 +21,7 @@ function PeriscopeSpy(config) {
 
 }
 
-PeriscopeSpy.prototype.start = function(userName) {
+PeriscopeSpy.prototype.follow = function(userName) {
   var userId = this.getUserId(userName);
 	var stream = this.T.stream('statuses/filter', { follow: [userId] });
 
