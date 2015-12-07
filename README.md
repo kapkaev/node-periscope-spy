@@ -1,4 +1,4 @@
-# node-periscope-recorder
+# node-periscope-spy
 Get Periscope lives from Twitter and store data from them
 
 ## Install
