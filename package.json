@@ -1,0 +1,22 @@
+{
+  "name": "node-periscope-spy",
+  "version": "0.1.0",
+  "description": "Get Periscope lives from Twitter and record data from them",
+  "main": "spy.js",
+  "keywords": [
+    "periscope",
+    "stream",
+    "data fetcher"
+  ],
+  "author": "Kapkaev Ildar <kirs.box@gmail.com>",
+  "license": "MIT",
+  "repository": "kapkaev/node-periscope-spy",
+  "bugs": {
+    "url": "https://github.com/kapkaev/node-periscope-spy/issues"
+  },
+  "dependencies": {
+    "node-periscope-stream": "^0.1.4",
+    "peristream": "^0.1.7",
+    "twit": "^1.1.20"
+  }
+}
