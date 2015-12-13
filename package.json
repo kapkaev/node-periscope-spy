@@ -1,22 +1,80 @@
 {
-  "name": "node-periscope-spy",
-  "version": "0.1.0",
-  "description": "Get Periscope lives from Twitter and record data from them",
-  "main": "spy.js",
-  "keywords": [
-    "periscope",
-    "stream",
-    "data fetcher"
+  "_args": [
+    [
+      "node-periscope-spy@^0.1.0",
+      "/Users/kapkaev/dev/personal/periscope"
+    ]
   ],
-  "author": "Kapkaev Ildar <kirs.box@gmail.com>",
-  "license": "MIT",
-  "repository": "kapkaev/node-periscope-spy",
+  "_from": "node-periscope-spy@>=0.1.0 <0.2.0",
+  "_id": "node-periscope-spy@0.1.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/node-periscope-spy",
+  "_nodeVersion": "5.1.1",
+  "_npmUser": {
+    "email": "kirs.box@gmail.com",
+    "name": "kapkaev"
+  },
+  "_npmVersion": "3.3.12",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "node-periscope-spy",
+    "raw": "node-periscope-spy@^0.1.0",
+    "rawSpec": "^0.1.0",
+    "scope": null,
+    "spec": ">=0.1.0 <0.2.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_shasum": "949f1da8fd12e4f647959237d00a1a37def7e5d1",
+  "_shrinkwrap": null,
+  "_spec": "node-periscope-spy@^0.1.0",
+  "_where": "/Users/kapkaev/dev/personal/periscope",
+  "author": {
+    "email": "kirs.box@gmail.com",
+    "name": "Kapkaev Ildar"
+  },
   "bugs": {
     "url": "https://github.com/kapkaev/node-periscope-spy/issues"
   },
   "dependencies": {
     "node-periscope-stream": "^0.1.4",
     "peristream": "^0.1.7",
-    "twit": "^1.1.20"
-  }
+    "twit": "^1.1.20",
+    "nedb": "^1.5.0",
+    "underscore-node": "^0.1.2"
+  },
+  "description": "Get Periscope lives from Twitter and record data from them",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "949f1da8fd12e4f647959237d00a1a37def7e5d1",
+    "tarball": "http://registry.npmjs.org/node-periscope-spy/-/node-periscope-spy-0.1.0.tgz"
+  },
+  "gitHead": "5e91edc6fcd026ca94fb42d2739702c3bc382a43",
+  "homepage": "https://github.com/kapkaev/node-periscope-spy#readme",
+  "keywords": [
+    "data fetcher",
+    "periscope",
+    "stream"
+  ],
+  "license": "MIT",
+  "main": "spy.js",
+  "maintainers": [
+    {
+      "name": "kapkaev",
+      "email": "kirs.box@gmail.com"
+    }
+  ],
+  "name": "node-periscope-spy",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kapkaev/node-periscope-spy.git"
+  },
+  "scripts": {},
+  "version": "0.1.0"
 }

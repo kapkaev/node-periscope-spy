@@ -1,17 +1,26 @@
-var fs = require('fs');
-var Twit = require('twit');
-var peristream = require('peristream');
+var fs = require('fs'),
+    Twit = require('twit'),
+    peristream = require('peristream'),
+    Stream = require('./models/stream');
 
 PERISCOPE_ID_REG = /periscope.tv\/w\/(.*)/i
 
 function PeriscopeSpy(config) {
+  PeriscopeSpy.bootstrap();
+
 	this.T = new Twit(config);
   this.session = new Date().getTime();
-
 }
 
+PeriscopeSpy.bootstrap = function(){
+  // create directory for db
+  var dir =  process.cwd() + '/db'
+  !fs.existsSync(dir) ? fs.mkdirSync(dir) : dir
+};
+
 PeriscopeSpy.prototype.follow = function(userId) {
-  var stream = this.T.stream('statuses/filter', { track: 'periscope' })
+  //var stream = this.T.stream('statuses/filter', { follow: userId })
+  var stream = this.T.stream('statuses/filter', { track: 'periscope' });
 
   stream.on('tweet', function (tweet) {
     if (!tweet.entities.urls || !tweet.entities.urls.length) {
@@ -50,43 +59,44 @@ PeriscopeSpy.prototype.follow = function(userId) {
 PeriscopeSpy.prototype.subscribeToStream = function(streamId){
   var stream = peristream(streamId);
 
-  var log = function(name, msg) {
-    console.log(name, msg);
-    this.saveToFile(msg);
+  var track = function(name, msg) {
+    this.saveToDb(streamId, msg);
   }.bind(this)
 
   stream.connect().then(function(emitter){
     emitter.on(peristream.ALL, function(message){
-      log('ALL', message)
+      track('ALL', message)
     });
 
     emitter.on(peristream.HEARTS, function(message){
-      log('HEARTS', message)
+      track('HEARTS', message)
     });
 
     emitter.on(peristream.COMMENTS, function(message){
-      log('COMMENTS', message)
+      track('COMMENTS', message)
     });
 
     emitter.on(peristream.DISCONNECT, function(message){
-      log('DISCONNECT', message)
+      track('DISCONNECT', message)
     });
 
     emitter.on(peristream.JOINED, function(message){
-      log('JOINED', message)
+      track('JOINED', message)
     });
 
   });
 
 };
 
-PeriscopeSpy.prototype.saveToFile = function(message) {
-  var data = JSON.stringify(message, null, 2)
+PeriscopeSpy.prototype.saveToDb = function(streamId, message) {
+  Stream.insert(streamId, message);
   // events types
-  // COMMENTS = 1;
-  // HEARTS = 2;
-  // JOINED = 3;
-  fs.appendFile(this.session + ".json", data);
+  //DISCONNECTED = 'DISCONNECTED';
+  //ALL = 'ALL';
+  //COMMENTS = 1;
+  //HEARTS = 2;
+  //JOINED = 3;
 }
 
 module.exports = PeriscopeSpy;
+

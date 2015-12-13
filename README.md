@@ -17,6 +17,5 @@ var config = {
 };
 var rec = new Spy(config);
 
-var userId = '30634464';
-spy.start(userId);
+spy.follow('kapkaev');
 ```
