@@ -3,10 +3,14 @@
     [
       "node-periscope-spy@^0.1.0",
       "/Users/kapkaev/dev/personal/periscope"
+    ],
+    [
+      "node-periscope-spy@^0.1.0",
+      "/Users/kapkaev/dev/personal/periscope-spy"
     ]
   ],
   "_from": "node-periscope-spy@>=0.1.0 <0.2.0",
-  "_id": "node-periscope-spy@0.1.0",
+  "_id": "node-periscope-spy@0.1.1",
   "_inCache": true,
   "_installable": true,
   "_location": "/node-periscope-spy",
@@ -28,10 +32,9 @@
   "_requiredBy": [
     "/"
   ],
-  "_shasum": "949f1da8fd12e4f647959237d00a1a37def7e5d1",
   "_shrinkwrap": null,
   "_spec": "node-periscope-spy@^0.1.0",
-  "_where": "/Users/kapkaev/dev/personal/periscope",
+  "_where": "/Users/kapkaev/dev/personal/periscope-spy",
   "author": {
     "email": "kirs.box@gmail.com",
     "name": "Kapkaev Ildar"
@@ -40,18 +43,19 @@
     "url": "https://github.com/kapkaev/node-periscope-spy/issues"
   },
   "dependencies": {
+    "nedb": "^1.5.0",
     "node-periscope-stream": "^0.1.4",
     "peristream": "^0.1.7",
     "twit": "^1.1.20",
-    "nedb": "^1.5.0",
-    "underscore-node": "^0.1.2"
+    "underscore-node": "^0.1.2",
+    "winston": "^2.1.1"
   },
   "description": "Get Periscope lives from Twitter and record data from them",
   "devDependencies": {},
   "directories": {},
   "dist": {
-    "shasum": "949f1da8fd12e4f647959237d00a1a37def7e5d1",
-    "tarball": "http://registry.npmjs.org/node-periscope-spy/-/node-periscope-spy-0.1.0.tgz"
+    "shasum": "423cac94cecd229b3d8c4ab26f746b64df450206",
+    "tarball": "http://registry.npmjs.org/node-periscope-spy/-/node-periscope-spy-0.1.1.tgz"
   },
   "gitHead": "5e91edc6fcd026ca94fb42d2739702c3bc382a43",
   "homepage": "https://github.com/kapkaev/node-periscope-spy#readme",

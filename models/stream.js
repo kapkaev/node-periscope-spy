@@ -1,4 +1,5 @@
 var Formatter = require('../libs/data_formater'),
+    Logger = require('../libs/logger'),
     Datastore = require('nedb'),
     dbFile = process.cwd() + '/db/streams.db',
     db = new Datastore({ filename: dbFile, autoload: true });
@@ -25,9 +26,9 @@ Stream.insert = function(streamId, data){
     // Two documents were inserted in the database
     // newDocs is an array with these documents, augmented with their _id
     if(err){
-      console.log("Error:", err);
+      Logger.error("Error:", err);
     } else {
-      console.log("Inserted record, size: ", JSON.stringify(newDocs).length);
+      Logger.info("Inserted record, size: ", JSON.stringify(newDocs).length);
     }
   });
 };
