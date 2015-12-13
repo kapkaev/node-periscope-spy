@@ -16,6 +16,7 @@ var config = {
 	access_token_secret: ''
 };
 var rec = new Spy(config);
+var userId = '30634464';
 
-spy.follow('kapkaev');
+spy.follow(userId);
 ```
