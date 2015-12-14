@@ -1,7 +1,8 @@
 var fs = require('fs'),
     Twit = require('twit'),
     peristream = require('peristream'),
-    Stream = require('./models/stream');
+    Event = require('./models/event'),
+    Broadcast = require('./models/broadcast');
 
 PERISCOPE_ID_REG = /periscope.tv\/w\/(.*)/i
 
@@ -28,6 +29,7 @@ PeriscopeSpy.prototype.follow = function(userId) {
     }
 
     var url = tweet.entities.urls[0].expanded_url;
+    var shortUrl = tweet.entities.urls[0].url;
 
     // skip non periscope links
     if (!url.match(PERISCOPE_ID_REG)){
@@ -36,11 +38,11 @@ PeriscopeSpy.prototype.follow = function(userId) {
 
     var streamId = url.match(PERISCOPE_ID_REG)[1];
 
+    this.shortUrl = shortUrl;
     this.subscribeToStream(streamId);
   }.bind(this));
 
   var log = function(name, msg) {
-    console.log("name: " + name);
     if (name == 'error'){
       console.log(msg);
     }
@@ -59,8 +61,10 @@ PeriscopeSpy.prototype.follow = function(userId) {
 PeriscopeSpy.prototype.subscribeToStream = function(streamId){
   var stream = peristream(streamId);
 
+  this.saveBrodcastInfo(streamId);
+
   var track = function(name, msg) {
-    this.saveToDb(streamId, msg);
+    this.saveEvent(streamId, msg);
   }.bind(this)
 
   stream.connect().then(function(emitter){
@@ -88,14 +92,18 @@ PeriscopeSpy.prototype.subscribeToStream = function(streamId){
 
 };
 
-PeriscopeSpy.prototype.saveToDb = function(streamId, message) {
-  Stream.insert(streamId, message);
-  // events types
-  //DISCONNECTED = 'DISCONNECTED';
-  //ALL = 'ALL';
-  //COMMENTS = 1;
-  //HEARTS = 2;
-  //JOINED = 3;
+// events types
+//DISCONNECTED = 'DISCONNECTED';
+//ALL = 'ALL';
+//COMMENTS = 1;
+//HEARTS = 2;
+//JOINED = 3;
+PeriscopeSpy.prototype.saveEvent = function(streamId, message) {
+  Event.insert(streamId, message);
+}
+
+PeriscopeSpy.prototype.saveBrodcastInfo = function(streamId) {
+  Broadcast.insert(streamId, this.shortUrl);
 }
 
 module.exports = PeriscopeSpy;
