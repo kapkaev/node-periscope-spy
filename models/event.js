@@ -1,7 +1,7 @@
 var Formatter = require('../libs/data_formater'),
     Datastore = require('nedb'),
     Logger = require('../libs/logger'),
-    dbFile = process.cwd() + '/db/Events.db',
+    dbFile = process.cwd() + '/db/event.db',
     db = new Datastore({ filename: dbFile, autoload: true });
 
 function Event(data) {

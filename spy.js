@@ -20,8 +20,8 @@ PeriscopeSpy.bootstrap = function(){
 };
 
 PeriscopeSpy.prototype.follow = function(userId) {
-  //var stream = this.T.stream('statuses/filter', { follow: userId })
-  var stream = this.T.stream('statuses/filter', { track: 'periscope' });
+  var stream = this.T.stream('statuses/filter', { follow: userId })
+  //var stream = this.T.stream('statuses/filter', { track: 'periscope' });
 
   stream.on('tweet', function (tweet) {
     if (!tweet.entities.urls || !tweet.entities.urls.length) {
@@ -69,7 +69,7 @@ PeriscopeSpy.prototype.subscribeToStream = function(streamId){
 
   stream.connect().then(function(emitter){
     emitter.on(peristream.ALL, function(message){
-      track('ALL', message)
+      //track('ALL', message)
     });
 
     emitter.on(peristream.HEARTS, function(message){

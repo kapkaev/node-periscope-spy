@@ -2,13 +2,13 @@ var cheerio = require('cheerio');
 var request = require('request');
 
 function informationFetcher(shortUrl, streamId){
-  this.url = shortUrl;
+  this.shortUrl = shortUrl;
   this.streamId = streamId;
 }
 
 informationFetcher.prototype.fetch = function() {
   var scope = this;
-  return informationFetcher._get(this.url).then(function(body){
+  return informationFetcher._get(this.shortUrl).then(function(body){
     return scope._parse_data(body)
   });
 };
@@ -18,6 +18,7 @@ informationFetcher.prototype._parse_data = function(body) {
   var url = $html('link[rel="canonical"]').attr('href');
   return {
     url: url,
+    shortUrl: this.shortUrl,
     streamId: this.streamId
   };
 };

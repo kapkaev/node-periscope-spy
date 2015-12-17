@@ -1,7 +1,7 @@
 var Formatter = require('../libs/information_fetcher'),
     Datastore = require('nedb'),
     Logger = require('../libs/logger'),
-    dbFile = process.cwd() + '/db/Broadcast.db',
+    dbFile = process.cwd() + '/db/broadcast.db',
     db = new Datastore({ filename: dbFile, autoload: true });
 
 function Broadcast(data) {
