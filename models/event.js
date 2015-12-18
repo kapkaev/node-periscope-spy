@@ -1,8 +1,7 @@
 var Formatter = require('../libs/data_formater'),
-    Datastore = require('nedb'),
+    _ = require('underscore-node'),
     Logger = require('../libs/logger'),
-    dbFile = process.cwd() + '/db/event.db',
-    db = new Datastore({ filename: dbFile, autoload: true });
+    DB = require('../db');
 
 function Event(data) {
   _.each(data, function(k,v){
@@ -13,16 +12,17 @@ function Event(data) {
 Event.typeMapping = {
   "DISCONNECTED": "DISCONNECTED",
   "ALL": "ALL",
-  1: "COMMENT",
-  2: "HEART",
-  3: "JOIN"
+  1: "comment",
+  2: "heart",
+  3: "join"
 };
 
 Event.insert = function(streamId, data){
   var formatter = new Formatter(streamId, data);
   var formattedData = formatter.format();
 
-  db.insert(formattedData, function (err, newDocs) {
+  DB.event.insert(formattedData, function (err, newDocs) {
+    Event.updateRelated(newDocs);
     // Two documents were inserted in the database
     // newDocs is an array with these documents, augmented with their _id
     if(err){
@@ -33,8 +33,23 @@ Event.insert = function(streamId, data){
   });
 };
 
+Event.updateRelated = function(rec){
+  var eventType = Event.typeMapping[rec.type]
+  var data = {
+    comment: 0,
+    join: 0,
+    heart: 0
+  }
+  data[eventType] += 1
+
+  if (data[eventType]){
+    DB.broadcast.update({ streamId: rec.streamId }, { $inc: data });
+  }
+}
+
+
 Event.prototype.findById = function(id) {
-  db.find({ streamId: id }, function (err, docs) {
+  DB.event.find({ streamId: id }, function (err, docs) {
     // docs is an array containing documents Mars, Earth, Jupiter
     // If no document is found, docs is equal to []
     return _.map(docs, new Stream());

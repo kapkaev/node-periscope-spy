@@ -19,7 +19,10 @@ informationFetcher.prototype._parse_data = function(body) {
   return {
     url: url,
     shortUrl: this.shortUrl,
-    streamId: this.streamId
+    streamId: this.streamId,
+    join: 0,
+    heart: 0,
+    comment: 0
   };
 };
 

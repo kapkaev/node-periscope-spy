@@ -2,7 +2,9 @@ var fs = require('fs'),
     Twit = require('twit'),
     peristream = require('peristream'),
     Event = require('./models/event'),
-    Broadcast = require('./models/broadcast');
+    Broadcast = require('./models/broadcast'),
+    DB = require('./db'),
+    Logger = require('./libs/logger');
 
 PERISCOPE_ID_REG = /periscope.tv\/w\/(.*)/i
 
@@ -11,6 +13,9 @@ function PeriscopeSpy(config) {
 
 	this.T = new Twit(config);
   this.session = new Date().getTime();
+  this.logger = Logger;
+  this.eventDB = DB.event;
+  this.broadcastDB = DB.broadcast;
 }
 
 PeriscopeSpy.bootstrap = function(){
@@ -20,8 +25,8 @@ PeriscopeSpy.bootstrap = function(){
 };
 
 PeriscopeSpy.prototype.follow = function(userId) {
-  var stream = this.T.stream('statuses/filter', { follow: userId })
-  //var stream = this.T.stream('statuses/filter', { track: 'periscope' });
+  //var stream = this.T.stream('statuses/filter', { follow: userId })
+  var stream = this.T.stream('statuses/filter', { track: 'periscope' });
 
   stream.on('tweet', function (tweet) {
     if (!tweet.entities.urls || !tweet.entities.urls.length) {
@@ -69,24 +74,24 @@ PeriscopeSpy.prototype.subscribeToStream = function(streamId){
 
   stream.connect().then(function(emitter){
     emitter.on(peristream.ALL, function(message){
-      //track('ALL', message)
+      track('ALL', message)
     });
 
-    emitter.on(peristream.HEARTS, function(message){
-      track('HEARTS', message)
-    });
+    //emitter.on(peristream.HEARTS, function(message){
+      //track('HEARTS', message)
+    //});
 
-    emitter.on(peristream.COMMENTS, function(message){
-      track('COMMENTS', message)
-    });
+    //emitter.on(peristream.COMMENTS, function(message){
+      //track('COMMENTS', message)
+    //});
 
-    emitter.on(peristream.DISCONNECT, function(message){
-      track('DISCONNECT', message)
-    });
+    //emitter.on(peristream.DISCONNECT, function(message){
+      //track('DISCONNECT', message)
+    //});
 
-    emitter.on(peristream.JOINED, function(message){
-      track('JOINED', message)
-    });
+    //emitter.on(peristream.JOINED, function(message){
+      //track('JOINED', message)
+    //});
 
   });
 
@@ -107,4 +112,3 @@ PeriscopeSpy.prototype.saveBrodcastInfo = function(streamId) {
 }
 
 module.exports = PeriscopeSpy;
-
