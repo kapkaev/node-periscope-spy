@@ -21,16 +21,23 @@ Event.insert = function(streamId, data){
   var formatter = new Formatter(streamId, data);
   var formattedData = formatter.format();
 
+  // Update broadcast counters
+  Event.updateRelated(formattedData);
+
+  // Skip hearts
+  if (data.type === 2) {
+    return undefined
+  }
+
+  // Insert new event
   DB.event.insert(formattedData, function (err, newDocs) {
-    Event.updateRelated(newDocs);
-    // Two documents were inserted in the database
-    // newDocs is an array with these documents, augmented with their _id
     if(err){
       Logger.error("Error:", err);
     } else {
-      Logger.info("Inserted event, size: ", JSON.stringify(newDocs).length);
+      Logger.info("Inserted event: ", Event.typeMapping[newDocs.type]);
     }
   });
+
 };
 
 Event.updateRelated = function(rec){

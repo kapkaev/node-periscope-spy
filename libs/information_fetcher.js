@@ -22,7 +22,8 @@ informationFetcher.prototype._parse_data = function(body) {
     streamId: this.streamId,
     join: 0,
     heart: 0,
-    comment: 0
+    comment: 0,
+    created_at: (new Date).getTime()
   };
 };
 
